@@ -41,6 +41,8 @@ def rep_num():
 
 
 if __name__ == '__main__':
-    url = input('깃허브의 Overview 부분을 띄우고 링크를 복사해 입력해주세요. : ')
+    url1 = 'http://github.com/'
+    url2 = input('깃허브 아이디를 입력해주세요. : ')
+    url = url1 + url2
 
     rnum = rep_num()
