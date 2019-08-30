@@ -1,9 +1,6 @@
 import urllib.request
 from bs4 import BeautifulSoup
 
-url = 'https://github.com/E-nan'
-
-#해당 링크 응답함수
 def url_res(url):
     request = urllib.request.Request(url)
     response = urllib.request.urlopen(request)
@@ -22,21 +19,28 @@ def del_space(data1, data2):
     data = {a:b}
     return data
 
+
 def rep_num():
-    xmlsoup = url_res(url)
-    pagePart = xmlsoup.find('ol', {'class': 'd-flex flex-wrap list-style-none gutter-condensed mb-4'})
-    anchorNumber = pagePart.find_all({'la': 'class'})
-    number = len(anchorNumber)
-    print(number)
+    try:
+        xmlsoup = url_res(url)
+        name = url.split('/')
+        pagePart = xmlsoup.find('ol', {'class': 'd-flex flex-wrap list-style-none gutter-condensed mb-4'})
+        anchorNumber = pagePart.find_all({'li': 'class'})
+        number = len(anchorNumber)
+        print(name[3] + ' 님의 Repository 개수 : ', number)
+
+        test = pagePart.find_all('li')
+        for alist in test:
+            rep_name = alist.find('a').text
+            rep_info = alist.find('p').text
+            results = del_space(rep_name, rep_info)
+            print(results)
+
+    except:
+        print('유효하지 않은 링크입니다.')
 
 
 if __name__ == '__main__':
-    xmlsoup = url_res(url)
-    pagePart = xmlsoup.find('ol',{'class':'d-flex flex-wrap list-style-none gutter-condensed mb-4'})
-    rep_name = pagePart.find({'a':'href'}).text
-    rep_info = pagePart.find({'p':'class'}).text
+    url = input('깃허브의 Overview 부분을 띄우고 링크를 복사해 입력해주세요. : ')
 
-    result = del_space(rep_name, rep_info)
-    print(result)
-    rep_num()
-
+    rnum = rep_num()
